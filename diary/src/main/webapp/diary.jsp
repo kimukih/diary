@@ -190,16 +190,16 @@
 		}
 		
 		div.main{
-			background-image: url("./diarybg.png");
+			background-image: url("/diary/img/diarybg.png");
 		}
 		
 		div.page{
-			background-image: url("./diarypage.png");
+			background-image: url("/diary/img/diarypage.png");
 		}
 		
 		@font-face {
 		    font-family: 'diary';
-		    src: url('./PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+		    src: url('/diary/font/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
 		}
 		
 		h1{
@@ -235,7 +235,7 @@
 		}
 		
 		div.tDay{
-			background-image: url("./mtcc.png");
+			background-image: url("/diary/img/mtcc.png");
 			background-size: contain;
 		}
 		
@@ -248,10 +248,11 @@
 </head>
 <body>
 	<div class="container main">
+	<div class="home"><a class="btn btn-dark" href="/diary/statsLunch.jsp">Lunch Menu Voting</a></div>
 	<%
 		if(sessOnRs.next()){
 	%>
-			<div class="logout"><a class="btn btn-dark" href="./logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div>
+			<div class="logout"><a class="btn btn-dark" href="./logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
 			<div class="logstatus">Login Status : <%=sessOnRs.getString("mySession")%></div>
 			<div class="logstatus">Login Date : <%=sessOnRs.getString("onDate")%></div>
 	<%

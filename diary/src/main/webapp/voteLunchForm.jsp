@@ -2,7 +2,7 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-	// 로그인 인증 분기코드
+	//로그인 인증 분기코드
 	// 모든 페이지에 들어갈 코드
 	// 로그인 상태가 ON 인지 OFF 인지
 	// diary.login.my_session => 'OFF' => Redirect("loginForm.jsp");
@@ -31,18 +31,6 @@
 		return;		// 로그인 실패시 로그인 창으로 재요청하고 코드진행 중단
 	}
 	
-	// 요청값 분석
-	String checkDate = request.getParameter("checkDate");
-	if(checkDate == null){
-		checkDate = "";
-	}
-	String ck = request.getParameter("ck");
-	if(ck == null){
-		ck = "";
-	}
-	
-	Class.forName("org.mariadb.jdbc.Driver");
-	
 	// 로그인 상태를 출력하는 코드
 	String sessOnSql = "SELECT my_session AS mySession, on_date AS onDate FROM login";
 	PreparedStatement sessOnStmt = null;
@@ -57,16 +45,62 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>일기쓰기</title>
+	<title></title>
 	<!-- Latest compiled and minified CSS -->
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 	<style>
+		a{
+			text-decoration: none;
+			color: #000000;
+			font-weight: bold;
+		}
+		
+		a:hover{color: gray;}
+		
+		.cell{
+			display: table-cell;
+			float: left;
+			width: 80px; height: 80px;
+			border: solid 1px #000000;
+			font-size: medium;
+			color : #000000;
+		}
+		
+		.yo{
+			float: left;
+			width: 80px; height: 40px;
+			color : #000000;
+			text-align: center;
+			vertical-align: middle;
+			font-size: large;
+			padding-left: 50px;
+		}
+		
+		.sun{
+			color: #FF0000;
+			clear: both;
+		}
+		
+		.sat{
+			color: #0000FF;
+		}
+		
+		div.logout{
+			display: table-cell;
+			float: right;
+			padding-top: 10px;
+		}
+		
 		.container{
 			text-align: center;
 		}
 		
 		.table{
 			text-align: center;
+		}
+		
+		td{
+			font-weight: bold;
 		}
 		
 		div.main{
@@ -99,30 +133,31 @@
 			padding-top: 10px;
 		}
 		
-		div.button{
-			text-align: right;
-		}
-		
-		div.checkDate{
-			text-align: left;
-		}
-		
-		.table-striped>td{
-			background-color: black;
-		}
-		
 		.logstatus{
 			font-family: 'diary';
 			text-align: left;
 			font-weight: bold;
 		}
 		
-		div.logout{
-			display: table-cell;
-			float: right;
-			padding-top: 10px;
+		div.cal{
+			padding-left: 25px;
 		}
-	
+		
+		div.cell{
+			background-color: #F6F6F6;
+			border-color: gray;
+		}
+		
+		div.tDay{
+			background-image: url("/diary/img/mtcc.png");
+			background-size: contain;
+		}
+		
+		#diaryDiv{
+            width: 600px;
+            height: 500px;
+            padding: 0px;
+        }
 	</style>
 </head>
 <body>
@@ -138,72 +173,18 @@
 	}
 	%>
 		<div class="row">
-			<div class="col"></div>			
+			<div class="col"></div>	
 			<div class="page col-8 mt-5 mb-5 p-3">
 			<!-- 메인 내용 시작 -->
-				<div class="checkDate"><b>Check Date : <%=checkDate%></b></div>
-				<div class="checkDate"><b>Result : <%=ck%></b></div>
-				
-				<h1>Add My Diary</h1>
-				<form method="post" action="./checkDateAction.jsp">
-					<b>Diary Check : </b>
-					<input type="date" name="checkDate" value="<%=checkDate%>">
-					<button type="submit" class="btn btn-dark">Check</button>
-				</form>
-				<form method="post" action="./addDiaryAction.jsp">
-					<table class="table table-hover table-striped table-light">
-						<tr>
-						<%
-							if(ck.equals("able")){
-						%>		
-								<td><b>Diary Date : </b></td>
-								<td><input type="text" name="diaryDate" value="<%=checkDate%>" readonly="readonly"></td>
-						<%
-							}else if(ck.equals("disable")){
-						%>		
-								<td><b>Diary Date : </b></td>
-								<td><input type="text" name="diaryDate" readonly="readonly"></td>
-						<%
-							}else{
-						%>
-								<td><b>Diary Date : </b></td>
-								<td><input type="text" name="diaryDate" readonly="readonly"></td>
-						<%
-							}
-						%>
-						</tr>
-						<tr>
-							<td><b>Title : </b></td>
-							<td><input type="text" name="title"></td>
-						</tr>
-						<tr>
-							<td><b>Weather : </b></td>
-							<td>
-								<select name="weather">
-									<option value="맑음">맑음</option>
-									<option value="흐림">흐림</option>
-									<option value="비">비</option>
-									<option value="눈">눈</option>
-								</select>
-							</td>
-						</tr>
-						<tr>
-							<td><b>Feeling : </b></td>
-							<td>
-								<input type="radio" name="feeling" value="&#128513;">&#128513;&nbsp;&nbsp;
-								<input type="radio" name="feeling" value="&#128529;">&#128529;&nbsp;&nbsp;
-								<input type="radio" name="feeling" value="&#128544;">&#128544;&nbsp;&nbsp;
-								<input type="radio" name="feeling" value="&#128567;">&#128567;&nbsp;&nbsp;
-								<input type="radio" name="feeling" value="&#128557;">&#128557;&nbsp;&nbsp;
-								<input type="radio" name="feeling" value="&#128542;">&#128542;
-							</td>
-						</tr>
-						<tr>
-							<td><b>Content : </b></td>
-							<td><textarea name="content" rows="15" cols="40"></textarea></td>
-						</tr>
-					</table>
-					<div class="button"><button type="submit" class="btn btn-dark">Add Diary</button></div>
+				<h1>Vote Today's Lunch</h1>
+				<form method="post" action="/diary/voteLunchAction.jsp">
+					<input type="radio" name="menu" value="한식">한식
+					<input type="radio" name="menu" value="일식">일식
+					<input type="radio" name="menu" value="양식">양식
+					<input type="radio" name="menu" value="중식">중식
+					<input type="radio" name="menu" value="기타">기타
+					<br><br>
+					<button type="submit" class="btn btn-dark">투표하기</button>
 				</form>
 			<!-- 메인 내용 끝 -->
 			</div>

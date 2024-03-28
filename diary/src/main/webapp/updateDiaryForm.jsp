@@ -78,16 +78,16 @@
 		}
 		
 		div.main{
-			background-image: url("./diarybg.png");
+			background-image: url("/diary/img/diarybg.png");
 		}
 		
 		div.page{
-			background-image: url("./diarypage.png");
+			background-image: url("/diary/img/diarypage.png");
 		}
 		
 		@font-face {
 		    font-family: 'diary';
-		    src: url('./PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+		    src: url('/diary/font/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
 		}
 		
 		h1{
@@ -154,22 +154,22 @@
 								<td>Weather : </td>
 								<td>
 									<select name="weather">
-										<option value="<%=rs.getString("weather")%>">맑음</option>
-										<option value="<%=rs.getString("weather")%>">흐림</option>
-										<option value="<%=rs.getString("weather")%>">비</option>
-										<option value="<%=rs.getString("weather")%>">눈</option>
+										<option value="맑음">맑음</option>
+										<option value="흐림">흐림</option>
+										<option value="비">비</option>
+										<option value="눈">눈</option>
 									</select>
 								</td>
 							</tr>
 							<tr>
 								<td>Feeling : </td>
 								<td>
-									<input type="radio" name="feeling" value="<%=rs.getString("feeling")%>">&#128513;&nbsp;&nbsp;
-									<input type="radio" name="feeling" value="<%=rs.getString("feeling")%>">&#128529;&nbsp;&nbsp;
-									<input type="radio" name="feeling" value="<%=rs.getString("feeling")%>">&#128544;&nbsp;&nbsp;
-									<input type="radio" name="feeling" value="<%=rs.getString("feeling")%>">&#128567;&nbsp;&nbsp;
-									<input type="radio" name="feeling" value="<%=rs.getString("feeling")%>">&#128557;&nbsp;&nbsp;
-									<input type="radio" name="feeling" value="<%=rs.getString("feeling")%>">&#128542;
+									<input type="radio" name="feeling" value="&#128513;">&#128513;&nbsp;&nbsp;
+									<input type="radio" name="feeling" value="&#128529;">&#128529;&nbsp;&nbsp;
+									<input type="radio" name="feeling" value="&#128544;">&#128544;&nbsp;&nbsp;
+									<input type="radio" name="feeling" value="&#128567;">&#128567;&nbsp;&nbsp;
+									<input type="radio" name="feeling" value="&#128557;">&#128557;&nbsp;&nbsp;
+									<input type="radio" name="feeling" value="&#128542;">&#128542;
 								</td>
 							</tr>
 							<tr>

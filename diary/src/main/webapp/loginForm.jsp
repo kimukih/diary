@@ -51,16 +51,16 @@
 		}
 		
 		div.main{
-			background-image: url("./diarybg.png");
+			background-image: url("/diary/img/diarybg.png");
 		}
 		
 		div.page{
-			background-image: url("./diarypage.png");
+			background-image: url("/diary/img/diarypage.png");
 		}
 		
 		@font-face {
 		    font-family: 'diary';
-		    src: url('./PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
+		    src: url('/diary/font/PlayfairDisplay-VariableFont_wght.ttf') format('truetype');
 		}
 		
 		h1{
