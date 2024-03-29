@@ -2,34 +2,17 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-	// 로그인 인증 분기코드
-	// 모든 페이지에 들어갈 코드
-	// 로그인 상태가 ON 인지 OFF 인지
-	// diary.login.my_session => 'OFF' => Redirect("loginForm.jsp");
-	// diary.login.my_session => 'ON' => Redirect("diary.jsp");
+	//0. session 사용 로그인(인증) 분기
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null){
+		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
+		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		return;
+	}
 	
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
-	String loginSql = "SELECT my_session AS mySession FROM login";
-	PreparedStatement loginStmt = null;
-	ResultSet loginRs = null;	
-	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	loginStmt = conn.prepareStatement(loginSql);
-	System.out.println("loginStmt : " + loginStmt);
-	
-	loginRs = loginStmt.executeQuery();
-	
-	String mySession = null;
-	if(loginRs.next()){
-		mySession = loginRs.getString("mySession");
-	}
-	
-	if(mySession.equals("OFF")){
-		String errMsg = URLEncoder.encode("접근실패, 로그인 먼저 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		return;		// 로그인 실패시 로그인 창으로 재요청하고 코드진행 중단
-	}
 	
 	// 요청값 분석
 	String diaryDate = request.getParameter("diaryDate");
@@ -176,6 +159,41 @@
 					<%
 						}
 					%>
+					<!-- 댓글 기능 추가 -->
+					<hr>
+					<h1>Comment</h1>
+					<form method="post" action="/diary/addCommentAction.jsp">
+						<input type="hidden" name="diaryDate" value="<%=diaryDate%>">
+						<textarea rows="2" cols="50" name="memo"></textarea><br>
+						<button type="submit" class="btn btn-dark">Add Comment</button>
+					</form>
+					<br>
+					<!-- 댓글 리스트 -->
+					<%
+					String commentSql = "SELECT comment_no AS commentNo, memo, update_date AS updateDate, create_date AS createDate FROM comment WHERE diary_date = ?";
+					PreparedStatement commentStmt = null;
+					ResultSet commentRs = null;
+					
+					commentStmt = conn.prepareStatement(commentSql);
+					commentStmt.setString(1, diaryDate);
+					System.out.println("commentStmt : " + commentStmt);
+					
+					commentRs = commentStmt.executeQuery();
+					%>
+					
+					<table class="table table-hover table-light table-striped">
+					<%
+						while(commentRs.next()){
+					%>
+							<tr>
+								<td><%=commentRs.getString("createDate")%></td>
+								<td><%=commentRs.getString("memo")%>
+								<td><a class="btn btn-dark" href="/diary/deleteCommentForm.jsp?commentNo=<%=commentRs.getInt("commentNo")%>">Delete</a></td>
+							</tr>
+					<%
+					}
+					%>
+					</table>
 			<!-- 메인 내용 끝 -->
 			</div>
 			<div class="col"></div>

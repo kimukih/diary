@@ -2,34 +2,17 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-	//로그인 인증 분기코드
-	// 모든 페이지에 들어갈 코드
-	// 로그인 상태가 ON 인지 OFF 인지
-	// diary.login.my_session => 'OFF' => Redirect("loginForm.jsp");
-	// diary.login.my_session => 'ON' => Redirect("diary.jsp");
+	//0. session 사용 로그인(인증) 분기
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null){
+		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
+		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		return;
+	}
 	
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
-	String loginSql = "SELECT my_session AS mySession FROM login";
-	PreparedStatement loginStmt = null;
-	ResultSet loginRs = null;	
-	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	loginStmt = conn.prepareStatement(loginSql);
-	System.out.println("loginStmt : " + loginStmt);
-	
-	loginRs = loginStmt.executeQuery();
-	
-	String mySession = null;
-	if(loginRs.next()){
-		mySession = loginRs.getString("mySession");
-	}
-	
-	if(mySession.equals("OFF")){
-		String errMsg = URLEncoder.encode("접근실패, 로그인 먼저 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		return;		// 로그인 실패시 로그인 창으로 재요청하고 코드진행 중단
-	}
 	
 	// 로그인 상태를 출력하는 코드
 	String sessOnSql = "SELECT my_session AS mySession, on_date AS onDate FROM login";
@@ -48,6 +31,13 @@
 	System.out.println("lunchStmt : " + lunchStmt);
 	
 	lunchRs = lunchStmt.executeQuery();
+	
+	String lunchListSql = "SELECT lunch_date AS lunchDate, menu, update_date AS updateDate, create_date AS createDate FROM lunch ORDER BY lunch_date DESC";
+	PreparedStatement lunchListStmt = null;
+	ResultSet lunchListRs = null;
+	
+	lunchListStmt = conn.prepareStatement(lunchListSql);
+	lunchListRs = lunchListStmt.executeQuery();
 %>
 <!DOCTYPE html>
 <html>
@@ -114,7 +104,7 @@
 </head>
 <body>
 	<div class="container main">
-	<div class="home"><a class="btn btn-dark" href="/diary/voteLunchForm.jsp">Vote Lunch</a></div>
+	<div class="home"><a class="btn btn-dark" href="/diary/diary.jsp">Home</a></div>
 	<%
 		if(sessOnRs.next()){
 	%>
@@ -168,6 +158,33 @@
 					%>
 					</tr>
 				</table>
+				<a class="btn btn-dark" href="/diary/voteLunchForm.jsp">Vote Lunch</a>
+				<br>
+				
+				<hr>
+				<h1>Lunch List</h1>
+				<table class="table table-hover table-light table-striper">
+						<tr>
+							<td>Lunch Date</td>
+							<td>Menu</td>
+							<td>Update Date</td>
+							<td>Create Date</td>
+							<td>&nbsp;</td>
+						</tr>
+					<%
+						while(lunchListRs.next()){
+					%>
+							<tr>
+								<td><%=lunchListRs.getString("lunchDate")%></td>
+								<td><%=lunchListRs.getString("menu")%></td>
+								<td><%=lunchListRs.getString("updateDate")%></td>
+								<td><%=lunchListRs.getString("createDate")%></td>
+								<td><a class="btn btn-dark" href="/diary/deleteLunchAction.jsp?lunchDate=<%=lunchListRs.getString("lunchDate")%>">Delete</a></td>
+							</tr>
+					<%
+						}
+					%>
+				</table >
 			<!-- 메인 내용 끝 -->
 			</div>
 			<div class="col"></div>

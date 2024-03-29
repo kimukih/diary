@@ -285,7 +285,7 @@
 				<%
 					for(int i = 1; i <= totalTd; i++){
 						if(i%7==1){
-							if(i-preBlank==tDay){
+							if(i-preBlank == tDay){
 				%>
 								<div class="cell sun tDay">
 				<%
@@ -295,7 +295,7 @@
 				<%
 							}
 						}else if(i%7==0){
-								if(i-preBlank==tDay){
+								if(i-preBlank == tDay){
 				%>
 									<div class="cell sat tDay">
 				<%
@@ -305,7 +305,7 @@
 				<%
 								}
 						}else{
-							if(i-preBlank==tDay){
+							if(i-preBlank == tDay){
 				%>
 								<div class="cell tDay">
 				<%

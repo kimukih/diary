@@ -10,6 +10,7 @@
 	System.out.println("loginMember : " + loginMember);
 	
 	// loginForm페이지는 로그아웃 상태에서만 출력되는 페이지
+	// session변수가 null이 아니다 > session 변수가 존재한다 > 로그인 상태이다
 	if(loginMember != null){
 		response.sendRedirect("/diary/diary.jsp");
 		return;	// 코드 진행을 끝내는 문법 ex) 메서드 끝낼 때 return 사용
