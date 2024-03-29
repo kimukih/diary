@@ -2,32 +2,17 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-	// 로그인 인증 분기코드
-	// 모든 페이지에 들어갈 코드
-	// 로그인 상태가 ON 인지 OFF 인지
-	// diary.login.my_session => 'OFF' => Redirect("loginForm.jsp");
-	// diary.login.my_session => 'ON' => Redirect("diary.jsp");
+	// 0-1) 로그인(인증) 분기 session 사용으로 변경
+	// 로그인 성공시 session에 loginMember라는 변수를 만들고 값으로 로그인 아이디를 저장
+	String loginMember = (String)session.getAttribute("loginMember");
+	// session.getAttribute()는 찾는 변수가 없으면 null값을 반환
+	// null값이면 한번도 로그인 한적이 없는상태, null이 아니면 로그인 상태
+	System.out.println("loginMember : " + loginMember);
 	
-	Class.forName("org.mariadb.jdbc.Driver");
-	Connection conn = null;
-	String loginSql = "SELECT my_session AS mySession FROM login";
-	PreparedStatement loginStmt = null;
-	ResultSet loginRs = null;
-
-	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	loginStmt = conn.prepareStatement(loginSql);
-	System.out.println("loginStmt : " + loginStmt);
-	
-	loginRs = loginStmt.executeQuery();
-	
-	String mySession = null;
-	if(loginRs.next()){
-		mySession = loginRs.getString("mySession");
-	}
-	
-	if(mySession.equals("ON")) {
-		response.sendRedirect("/diary/loginForm.jsp");
-		return; 	// 코드 진행을 끝내는 문법 ex) 메서드 끝낼때 return사용
+	// loginForm페이지는 로그아웃 상태에서만 출력되는 페이지
+	if(loginMember != null){
+		response.sendRedirect("/diary/diary.jsp");
+		return;	// 코드 진행을 끝내는 문법 ex) 메서드 끝낼 때 return 사용
 	}
 	
 	// 1. 요청값 분석하기

@@ -2,34 +2,17 @@
 <%@ page import="java.sql.*" %>
 <%@ page import="java.net.URLEncoder"%>
 <%
-	//로그인 인증 분기코드
-	// 모든 페이지에 들어갈 코드
-	// 로그인 상태가 ON 인지 OFF 인지
-	// diary.login.my_session => 'OFF' => Redirect("loginForm.jsp");
-	// diary.login.my_session => 'ON' => Redirect("diary.jsp");
+	// 0. session 사용 로그인(인증) 분기
+	String loginMember = (String)(session.getAttribute("loginMember"));
+	if(loginMember == null){
+		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
+		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		return;
+	}
 	
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
-	String loginSql = "SELECT my_session AS mySession FROM login";
-	PreparedStatement loginStmt = null;
-	ResultSet loginRs = null;	
-	
 	conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/diary", "root", "java1234");
-	loginStmt = conn.prepareStatement(loginSql);
-	System.out.println("loginStmt : " + loginStmt);
-	
-	loginRs = loginStmt.executeQuery();
-	
-	String mySession = null;
-	if(loginRs.next()){
-		mySession = loginRs.getString("mySession");
-	}
-	
-	if(mySession.equals("OFF")){
-		String errMsg = URLEncoder.encode("접근실패, 로그인 먼저 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
-		return;		// 로그인 실패시 로그인 창으로 재요청하고 코드진행 중단
-	}
 	
 	// 로그인 상태를 출력하는 코드
 	String sessOnSql = "SELECT my_session AS mySession, on_date AS onDate FROM login";
@@ -40,6 +23,12 @@
 	System.out.println("sessOnStmt : " + sessOnStmt);
 	
 	sessOnRs = sessOnStmt.executeQuery();
+	
+	// 요청값 분석
+	String msg = request.getParameter("msg");
+	String lunchDate = request.getParameter("lunchDate");
+	System.out.println("msg : " + msg);
+	System.out.println("lunchDate : " + lunchDate);
 %>
 <!DOCTYPE html>
 <html>
@@ -177,14 +166,26 @@
 			<div class="page col-8 mt-5 mb-5 p-3">
 			<!-- 메인 내용 시작 -->
 				<h1>Vote Today's Lunch</h1>
+				<form method="post" action="/diary/checkLunchDateAction.jsp">
+					<input type="date" name="checkDate">
+					<button type="submit" class="btn btn-dark">Check</button><br>
+					<%
+					if(msg != null){
+					%>
+						<%=msg%>
+					<%
+					}
+					%>
+				</form>
 				<form method="post" action="/diary/voteLunchAction.jsp">
-					<input type="radio" name="menu" value="한식">한식
-					<input type="radio" name="menu" value="일식">일식
-					<input type="radio" name="menu" value="양식">양식
-					<input type="radio" name="menu" value="중식">중식
-					<input type="radio" name="menu" value="기타">기타
+					<input type="date" name="lunchDate" value="<%=lunchDate%>" readonly="readonly"><br>
+					<input type="radio" name="menu" value="한식"> 한식&nbsp;&nbsp;
+					<input type="radio" name="menu" value="일식"> 일식&nbsp;&nbsp;
+					<input type="radio" name="menu" value="양식"> 양식&nbsp;&nbsp;
+					<input type="radio" name="menu" value="중식"> 중식&nbsp;&nbsp;
+					<input type="radio" name="menu" value="기타"> 기타
 					<br><br>
-					<button type="submit" class="btn btn-dark">투표하기</button>
+					<button type="submit" class="btn btn-dark">Vote</button>
 				</form>
 			<!-- 메인 내용 끝 -->
 			</div>

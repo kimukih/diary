@@ -43,12 +43,15 @@
 
 	// 요청값 분석
 	String menu = request.getParameter("menu");
+	String lunchDate = request.getParameter("lunchDate");
 	System.out.println("menu : " + menu);
+	System.out.println("lunchDate : " + lunchDate);
 	
-	String voteMenuSql = "INSERT INTO lunch(lunch_date, menu, update_date, create_date) VALUES(CURDATE(), ?, NOW(), NOW())";
+	String voteMenuSql = "INSERT INTO lunch(lunch_date, menu, update_date, create_date) VALUES(?, ?, NOW(), NOW())";
 	PreparedStatement voteMenuStmt = null;
 	voteMenuStmt = conn.prepareStatement(voteMenuSql);
-	voteMenuStmt.setString(1, menu);
+	voteMenuStmt.setString(1, lunchDate);
+	voteMenuStmt.setString(2, menu);
 	System.out.println("voteMenuStmt : " + voteMenuStmt);
 	
 	int row = voteMenuStmt.executeUpdate();
@@ -56,7 +59,7 @@
 		response.sendRedirect("/diary/statsLunch.jsp");
 		System.out.println("투표 성공");
 	}else{
-		response.sendRedirect("/diary/voteLunchForm.jsp?menu=" + menu);
+		response.sendRedirect("/diary/voteLunchForm.jsp");
 		System.out.println("투표 실패");
 	}
 	

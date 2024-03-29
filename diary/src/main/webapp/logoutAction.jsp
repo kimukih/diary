@@ -1,6 +1,16 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ page import="java.sql.*" %>
 <%
+	// session.removeAttribute("loginMember");
+	System.out.println("session.invalidate() 호출 전 " + session.getId());
+	
+	session.invalidate();	// 세션 공간 초기화
+	System.out.println("session.invalidate() 호출 후 " + session.getId());
+	
+	response.sendRedirect("/diary/loginForm.jsp");
+
+
+	/*
 	// 요청값 분석하기
 	String mySession = request.getParameter("mySession");
 	System.out.println("mySession : " + mySession);
@@ -32,4 +42,5 @@
 			System.out.println("현재 날짜 저장 실패");
 		}
 	}
+	*/
 %>
