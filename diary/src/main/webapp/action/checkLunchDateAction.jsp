@@ -20,9 +20,9 @@
 	
 	if(rs.next()){
 		String msg = URLEncoder.encode("이미 투표를 완료한 날짜입니다.", "utf-8");
-		response.sendRedirect("/diary/voteLunchForm.jsp?msg=" + msg);
+		response.sendRedirect("/diary/form/voteLunchForm.jsp?msg=" + msg);
 	}else{
 		String msg = URLEncoder.encode("투표 가능한 날짜입니다.", "utf-8");
-		response.sendRedirect("/diary/voteLunchForm.jsp?lunchDate=" + checkDate + "&msg=" + msg);
+		response.sendRedirect("/diary/form/voteLunchForm.jsp?lunchDate=" + checkDate + "&msg=" + msg);
 	}
 %>

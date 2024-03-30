@@ -27,7 +27,7 @@
 	
 	if(mySession.equals("OFF")){
 		String errMsg = URLEncoder.encode("접근실패, 로그인 먼저 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg);
+		response.sendRedirect("/diary/form/loginForm.jsp?errMsg=" + errMsg);
 		return;		// 로그인 실패시 로그인 창으로 재요청하고 코드진행 중단
 	}
 	
@@ -59,7 +59,7 @@
 		response.sendRedirect("/diary/statsLunch.jsp");
 		System.out.println("투표 성공");
 	}else{
-		response.sendRedirect("/diary/voteLunchForm.jsp");
+		response.sendRedirect("/diary/form/voteLunchForm.jsp");
 		System.out.println("투표 실패");
 	}
 	

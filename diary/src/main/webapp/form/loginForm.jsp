@@ -90,7 +90,7 @@
 						%>
 					</div>
 					
-					<form method="post" action="./loginAction.jsp">
+					<form method="post" action="/diary/action/loginAction.jsp">
 						<h1>Login</h1>
 						<br>
 						<table class="table table-hover table-striped table-light">

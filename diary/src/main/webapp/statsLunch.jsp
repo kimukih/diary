@@ -6,7 +6,7 @@
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
 		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		response.sendRedirect("/diary/form/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
 		return;
 	}
 	
@@ -108,7 +108,7 @@
 	<%
 		if(sessOnRs.next()){
 	%>
-			<div class="logout"><a class="btn btn-dark" href="./logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
+			<div class="logout"><a class="btn btn-dark" href="/diary/action/logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
 			<div class="logstatus">Login Status : <%=sessOnRs.getString("mySession")%></div>
 			<div class="logstatus">Login Date : <%=sessOnRs.getString("onDate")%></div>
 	<%
@@ -158,7 +158,7 @@
 					%>
 					</tr>
 				</table>
-				<a class="btn btn-dark" href="/diary/voteLunchForm.jsp">Vote Lunch</a>
+				<a class="btn btn-dark" href="/diary/form/voteLunchForm.jsp">Vote Lunch</a>
 				<br>
 				
 				<hr>
@@ -179,7 +179,7 @@
 								<td><%=lunchListRs.getString("menu")%></td>
 								<td><%=lunchListRs.getString("updateDate")%></td>
 								<td><%=lunchListRs.getString("createDate")%></td>
-								<td><a class="btn btn-dark" href="/diary/deleteLunchAction.jsp?lunchDate=<%=lunchListRs.getString("lunchDate")%>">Delete</a></td>
+								<td><a class="btn btn-dark" href="/diary/action/deleteLunchAction.jsp?lunchDate=<%=lunchListRs.getString("lunchDate")%>">Delete</a></td>
 							</tr>
 					<%
 						}

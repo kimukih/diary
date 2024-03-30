@@ -25,6 +25,6 @@
 		response.sendRedirect("/diary/diary.jsp");
 	}else{
 		System.out.println("일기 삭제 실패");
-		response.sendRedirect("/diary/deleteDiaryForm.jsp?diaryDate=" + diaryDate);
+		response.sendRedirect("/diary/form/deleteDiaryForm.jsp?diaryDate=" + diaryDate);
 	}
 %>

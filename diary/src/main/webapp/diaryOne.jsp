@@ -6,7 +6,7 @@
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
 		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		response.sendRedirect("/diary/form/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
 		return;
 	}
 	
@@ -109,7 +109,7 @@
 	<%
 	if(sessOnRs.next()){
 	%>
-		<div class="logout"><a class="btn btn-dark" href="./logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
+		<div class="logout"><a class="btn btn-dark" href="/diary/action/logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
 		<div class="logstatus">Login Status : <%=sessOnRs.getString("mySession")%></div>
 		<div class="logstatus">Login Date : <%=sessOnRs.getString("onDate")%></div>
 	<%
@@ -154,15 +154,15 @@
 								</tr>
 							</table>
 							
-							<span><a class="btn btn-dark" href="/diary/updateDiaryForm.jsp?diaryDate=<%=rs.getString("diaryDate")%>">Update</a></span>
-							<span><a class="btn btn-dark" href="/diary/deleteDiaryForm.jsp?diaryDate=<%=rs.getString("diaryDate")%>">Delete</a></span>
+							<span><a class="btn btn-dark" href="/diary/form/updateDiaryForm.jsp?diaryDate=<%=rs.getString("diaryDate")%>">Update</a></span>
+							<span><a class="btn btn-dark" href="/diary/form/deleteDiaryForm.jsp?diaryDate=<%=rs.getString("diaryDate")%>">Delete</a></span>
 					<%
 						}
 					%>
 					<!-- 댓글 기능 추가 -->
 					<hr>
 					<h1>Comment</h1>
-					<form method="post" action="/diary/addCommentAction.jsp">
+					<form method="post" action="/diary/action/addCommentAction.jsp">
 						<input type="hidden" name="diaryDate" value="<%=diaryDate%>">
 						<textarea rows="2" cols="50" name="memo"></textarea><br>
 						<button type="submit" class="btn btn-dark">Add Comment</button>
@@ -188,7 +188,7 @@
 							<tr>
 								<td><%=commentRs.getString("createDate")%></td>
 								<td><%=commentRs.getString("memo")%>
-								<td><a class="btn btn-dark" href="/diary/deleteCommentForm.jsp?commentNo=<%=commentRs.getInt("commentNo")%>">Delete</a></td>
+								<td><a class="btn btn-dark" href="/diary/form/deleteCommentForm.jsp?commentNo=<%=commentRs.getInt("commentNo")%>">Delete</a></td>
 							</tr>
 					<%
 					}

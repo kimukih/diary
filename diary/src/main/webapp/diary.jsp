@@ -7,7 +7,7 @@
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
 		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		response.sendRedirect("/diary/form/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
 		return;
 	}
 	
@@ -235,7 +235,7 @@
 	<%
 		if(sessOnRs.next()){
 	%>
-			<div class="logout"><a class="btn btn-dark" href="./logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
+			<div class="logout"><a class="btn btn-dark" href="/diary/action/logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
 			<div class="logstatus">Login Status : <%=sessOnRs.getString("mySession")%></div>
 			<div class="logstatus">Login Date : <%=sessOnRs.getString("onDate")%></div>
 	<%
@@ -256,7 +256,7 @@
 				%>
 						<tr>
 							<td><%=diaryContentRs.getString("diaryDate")%></td>
-							<td><a href="./diaryOne.jsp?diaryDate=<%=diaryContentRs.getString("diaryDate")%>"><%=diaryContentRs.getString("title")%></a></td>
+							<td><a href="/diary/diaryOne.jsp?diaryDate=<%=diaryContentRs.getString("diaryDate")%>"><%=diaryContentRs.getString("title")%></a></td>
 							<td><%=diaryContentRs.getString("createDate")%></td>
 						</tr>
 				<%
@@ -265,8 +265,8 @@
 					
 				</table>
 				
-				<a href="./diaryList.jsp?currentPage=1&rowPerPage=10" class="btn btn-dark">All Diary List</a>
-				<a href="./addDiaryForm.jsp" class="btn btn-dark">Add Diary</a>
+				<a href="/diary/diaryList.jsp?currentPage=1&rowPerPage=10" class="btn btn-dark">All Diary List</a>
+				<a href="/diary/form/addDiaryForm.jsp" class="btn btn-dark">Add Diary</a>
 				
 				<hr>
 				<a href="/diary/diary.jsp?targetYear=<%=thisYear%>&targetMonth=<%=thisMonth-1%>" class="btn btn-dark">&laquo;</a>

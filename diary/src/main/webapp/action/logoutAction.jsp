@@ -7,7 +7,7 @@
 	session.invalidate();	// 세션 공간 초기화
 	System.out.println("session.invalidate() 호출 후 " + session.getId());
 	
-	response.sendRedirect("/diary/loginForm.jsp");
+	response.sendRedirect("/diary/form/loginForm.jsp");
 
 
 	/*

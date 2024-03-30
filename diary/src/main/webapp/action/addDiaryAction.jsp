@@ -36,6 +36,6 @@
 		response.sendRedirect("/diary/diary.jsp");
 	}else{
 		System.out.println("일기 쓰기 실패");
-		response.sendRedirect("/diary/addDiaryAction.jsp");
+		response.sendRedirect("/diary/action/addDiaryAction.jsp");
 	}
 %>

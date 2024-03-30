@@ -36,6 +36,6 @@
 		response.sendRedirect("/diary/diaryOne.jsp?diaryDate=" + diaryDate);
 	}else{
 		System.out.println("일기 수정 실패");
-		response.sendRedirect("/diary/updateDiaryForm.jsp?diaryDate=" + diaryDate);
+		response.sendRedirect("/diary/form/updateDiaryForm.jsp?diaryDate=" + diaryDate);
 	}
 %>

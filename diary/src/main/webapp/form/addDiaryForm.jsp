@@ -6,7 +6,7 @@
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
 		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		response.sendRedirect("/diary/form/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
 		return;
 	}
 	
@@ -114,7 +114,7 @@
 	<%
 	if(sessOnRs.next()){
 	%>
-		<div class="logout"><a class="btn btn-dark" href="./logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
+		<div class="logout"><a class="btn btn-dark" href="/diary/action/logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
 		<div class="logstatus">Login Status : <%=sessOnRs.getString("mySession")%></div>
 		<div class="logstatus">Login Date : <%=sessOnRs.getString("onDate")%></div>
 	<%
@@ -128,12 +128,12 @@
 				<div class="checkDate"><b>Result : <%=ck%></b></div>
 				
 				<h1>Add My Diary</h1>
-				<form method="post" action="./checkDateAction.jsp">
+				<form method="post" action="/diary/action/checkDateAction.jsp">
 					<b>Diary Check : </b>
 					<input type="date" name="checkDate" value="<%=checkDate%>">
 					<button type="submit" class="btn btn-dark">Check</button>
 				</form>
-				<form method="post" action="./addDiaryAction.jsp">
+				<form method="post" action="/diary/action/addDiaryAction.jsp">
 					<table class="table table-hover table-striped table-light">
 						<tr>
 						<%

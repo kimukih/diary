@@ -6,7 +6,7 @@
 	String loginMember = (String)(session.getAttribute("loginMember"));
 	if(loginMember == null){
 		String errMsg = URLEncoder.encode("로그인 상태가 아닙니다. 로그인을 해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		response.sendRedirect("/diary/form/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
 		return;
 	}
 	
@@ -155,7 +155,7 @@
 	<%
 	if(sessOnRs.next()){
 	%>
-		<div class="logout"><a class="btn btn-dark" href="./logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
+		<div class="logout"><a class="btn btn-dark" href="/diary/action/logoutAction.jsp?mySession=<%=sessOnRs.getString("mySession")%>">Logout</a></div><br><br>
 		<div class="logstatus">Login Status : <%=sessOnRs.getString("mySession")%></div>
 		<div class="logstatus">Login Date : <%=sessOnRs.getString("onDate")%></div>
 	<%
@@ -166,7 +166,7 @@
 			<div class="page col-8 mt-5 mb-5 p-3">
 			<!-- 메인 내용 시작 -->
 				<h1>Vote Today's Lunch</h1>
-				<form method="post" action="/diary/checkLunchDateAction.jsp">
+				<form method="post" action="/diary/action/checkLunchDateAction.jsp">
 					<input type="date" name="checkDate">
 					<button type="submit" class="btn btn-dark">Check</button><br>
 					<%
@@ -177,7 +177,7 @@
 					}
 					%>
 				</form>
-				<form method="post" action="/diary/voteLunchAction.jsp">
+				<form method="post" action="/diary/action/voteLunchAction.jsp">
 					<input type="date" name="lunchDate" value="<%=lunchDate%>" readonly="readonly"><br>
 					<input type="radio" name="menu" value="한식"> 한식&nbsp;&nbsp;
 					<input type="radio" name="menu" value="일식"> 일식&nbsp;&nbsp;

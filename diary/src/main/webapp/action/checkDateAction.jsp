@@ -4,7 +4,7 @@
 <%
 	String checkDate = request.getParameter("checkDate");
 
-	String sql1 = "select my_session mySession from login";
+	String sql1 = "SELECT my_session mySession FROM login";
 	Class.forName("org.mariadb.jdbc.Driver");
 	Connection conn = null;
 	PreparedStatement stmt1 = null;
@@ -38,9 +38,9 @@
 
 	if(rs2.next()){
 		// 일기 작성 불가
-		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=disable");
+		response.sendRedirect("/diary/form/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=disable");
 	}else{
 		// 일기 작성 가능
-		response.sendRedirect("/diary/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=able");
+		response.sendRedirect("/diary/form/addDiaryForm.jsp?checkDate=" + checkDate + "&ck=able");
 	}
 %>

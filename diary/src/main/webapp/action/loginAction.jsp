@@ -61,6 +61,6 @@
 	}else{
 		// 로그인 실패
 		String errMsg = URLEncoder.encode("로그인 실패, 아이디와 비밀번호를 확인해주세요.", "utf-8");
-		response.sendRedirect("/diary/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
+		response.sendRedirect("/diary/form/loginForm.jsp?errMsg=" + errMsg); // 에러메시지 출력
 	}
 %>
