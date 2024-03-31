@@ -83,7 +83,7 @@
 			background-color: gray;
 		}
 		
-		div.home{
+		span.home{
 			display: table-cell;
 			float: left;
 			padding-top: 10px;
@@ -104,7 +104,8 @@
 </head>
 <body>
 	<div class="container main">
-	<div class="home"><a class="btn btn-dark" href="/diary/diary.jsp">Home</a></div>
+	<span class="home"><a class="btn btn-dark" href="/diary/diary.jsp">Home</a></span>
+	<span class="home" style="margin-left: 10px"><a class="btn btn-dark" href="/diary/diary.jsp">Back</a></span>
 	<%
 		if(sessOnRs.next()){
 	%>

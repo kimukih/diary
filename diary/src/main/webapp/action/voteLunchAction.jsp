@@ -47,6 +47,14 @@
 	System.out.println("menu : " + menu);
 	System.out.println("lunchDate : " + lunchDate);
 	
+	// menu가 null 값이거나 lunchDate가 빈문자열인 경우
+	// 에러메시지 출력과 함께 투표 페이지로 재요청
+	if(menu == null || lunchDate.equals(" ")){
+		String errMsg = URLEncoder.encode("투표에 실패했습니다. 투표날짜와 메뉴를 선택해주세요.", "utf-8");
+		response.sendRedirect("/diary/form/voteLunchForm.jsp?errMsg=" + errMsg);
+		return;
+	}
+	
 	String voteMenuSql = "INSERT INTO lunch(lunch_date, menu, update_date, create_date) VALUES(?, ?, NOW(), NOW())";
 	PreparedStatement voteMenuStmt = null;
 	voteMenuStmt = conn.prepareStatement(voteMenuSql);

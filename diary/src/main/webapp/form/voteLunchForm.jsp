@@ -26,8 +26,10 @@
 	
 	// 요청값 분석
 	String msg = request.getParameter("msg");
+	String errMsg = request.getParameter("errMsg");
 	String lunchDate = request.getParameter("lunchDate");
 	System.out.println("msg : " + msg);
+	System.out.println("errMsg : " + errMsg);
 	System.out.println("lunchDate : " + lunchDate);
 %>
 <!DOCTYPE html>
@@ -116,7 +118,7 @@
 			background-color: gray;
 		}
 		
-		div.home{
+		span.home{
 			display: table-cell;
 			float: left;
 			padding-top: 10px;
@@ -151,7 +153,8 @@
 </head>
 <body>
 	<div class="container main">
-	<div class="home"><a class="btn btn-dark" href="/diary/diary.jsp">Home</a></div>
+	<span class="home"><a class="btn btn-dark" href="/diary/diary.jsp">Home</a></span>
+	<span class="home" style="margin-left: 10px"><a class="btn btn-dark" href="/diary/statsLunch.jsp">Back</a></span>
 	<%
 	if(sessOnRs.next()){
 	%>
@@ -178,7 +181,7 @@
 					%>
 				</form>
 				<form method="post" action="/diary/action/voteLunchAction.jsp">
-					<input type="date" name="lunchDate" value="<%=lunchDate%>" readonly="readonly"><br>
+					<input type="date" name="lunchDate" value="<%=lunchDate%>" readonly="readonly"><br><br>
 					<input type="radio" name="menu" value="한식"> 한식&nbsp;&nbsp;
 					<input type="radio" name="menu" value="일식"> 일식&nbsp;&nbsp;
 					<input type="radio" name="menu" value="양식"> 양식&nbsp;&nbsp;
@@ -187,6 +190,14 @@
 					<br><br>
 					<button type="submit" class="btn btn-dark">Vote</button>
 				</form>
+				<br>
+				<%
+				if(errMsg != null){
+				%>
+					<%=errMsg%>
+				<%
+				}
+				%>
 			<!-- 메인 내용 끝 -->
 			</div>
 			<div class="col"></div>	
